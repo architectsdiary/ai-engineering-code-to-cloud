@@ -1,0 +1,13 @@
+# User Requirements
+- FR-01 Create User with username, firstName, lastName, email and one or more roles; default ACTIVE.
+- FR-02 Retrieve User by ID.
+- FR-03 List Users.
+- FR-04 Update username, names, email and roles; ID/createdAt immutable.
+- FR-05 Update ACTIVE/INACTIVE status independently.
+- FR-06 Replace roles independently; at least one role required.
+- FR-07 Delete User; no Customer/Seller cascading behavior is defined.
+- BR-U01 Username unique case-insensitively.
+- BR-U02 Email unique case-insensitively.
+- BR-U03 Roles limited to CUSTOMER, SELLER, ADMIN.
+- BR-U04 Multi-role supported.
+- BR-U05 Existing Customer API must not be unintentionally broken.
