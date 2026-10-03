@@ -1,0 +1,175 @@
+openapi: 3.0.3
+info:
+  title: Mini E-Commerce User Management API
+  version: 1.0.0
+paths:
+  /api/v1/users:
+    post:
+      summary: Create User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UserWrite' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { $ref: '#/components/responses/Conflict' }
+    get:
+      summary: List Users
+      responses:
+        '200':
+          description: Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/User' }
+  /api/v1/users/{id}:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    get:
+      summary: Get User by ID
+      responses:
+        '200':
+          description: User
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      summary: Update User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UserWrite' }
+      responses:
+        '200':
+          description: Updated User
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+    delete:
+      summary: Delete User
+      responses:
+        '204': { description: Deleted }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/users/{id}/status:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    patch:
+      summary: Update User status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/StatusUpdate' }
+      responses:
+        '200':
+          description: Updated User
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/users/{id}/roles:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    patch:
+      summary: Replace User roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RolesUpdate' }
+      responses:
+        '200':
+          description: Updated User
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+components:
+  parameters:
+    UserId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  schemas:
+    UserRole:
+      type: string
+      enum: [CUSTOMER, SELLER, ADMIN]
+    UserStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE]
+    UserWrite:
+      type: object
+      required: [username, firstName, lastName, email, roles]
+      properties:
+        username: { type: string, minLength: 1 }
+        firstName: { type: string, minLength: 1 }
+        lastName: { type: string, minLength: 1 }
+        email: { type: string, format: email }
+        roles:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items: { $ref: '#/components/schemas/UserRole' }
+    StatusUpdate:
+      type: object
+      required: [status]
+      properties:
+        status: { $ref: '#/components/schemas/UserStatus' }
+    RolesUpdate:
+      type: object
+      required: [roles]
+      properties:
+        roles:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items: { $ref: '#/components/schemas/UserRole' }
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserWrite'
+        - type: object
+          required: [id, status, createdAt, updatedAt]
+          properties:
+            id: { type: string, format: uuid, readOnly: true }
+            status: { $ref: '#/components/schemas/UserStatus' }
+            createdAt: { type: string, format: date-time, readOnly: true }
+            updatedAt: { type: string, format: date-time, readOnly: true }
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp: { type: string, format: date-time }
+        status: { type: integer }
+        error: { type: string }
+        message: { type: string }
+        path: { type: string }
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }

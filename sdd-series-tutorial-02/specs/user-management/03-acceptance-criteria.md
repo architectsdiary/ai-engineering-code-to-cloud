@@ -1,0 +1,24 @@
+# User Management — Acceptance Criteria
+
+- AC-01 Valid creation returns a generated UUID, `ACTIVE` status, and timestamps.
+- AC-02 Username is unique case-insensitively.
+- AC-03 Email is unique case-insensitively.
+- AC-04 Missing/invalid required input is rejected.
+- AC-05 Empty roles are rejected.
+- AC-06 Unsupported roles are rejected.
+- AC-07 Multiple supported roles are accepted.
+- AC-08 Existing User can be retrieved by ID.
+- AC-09 Missing User retrieval returns 404.
+- AC-10 Listing returns all existing Users.
+- AC-11 Listing with no Users returns an empty collection.
+- AC-12 Editable User fields and roles can be updated.
+- AC-13 User ID and `createdAt` remain unchanged during update.
+- AC-14 A User may retain their own username/email during update.
+- AC-15 A User cannot take another User's username/email.
+- AC-16 Status can be changed between `ACTIVE` and `INACTIVE`.
+- AC-17 Roles can be replaced with a non-empty supported set.
+- AC-18 Existing User can be deleted.
+- AC-19 Deleting a missing User returns 404.
+- AC-20 REST API does not directly expose JPA entities.
+- AC-21 Out-of-scope future capabilities are not implemented.
+- AC-22 The project compiles and all automated tests pass.

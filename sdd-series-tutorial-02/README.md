@@ -1,15 +1,19 @@
-# SDD Series — Tutorial 02
-## Evolving the Application: Mini E-Commerce Foundation
+# SDD Series — Tutorial 02: Mini E-Commerce Foundation
 
-Tutorial 02 evolves the existing `mini-ecom-backend` produced from Tutorial 01. This folder contains the specification delta, not application source.
+Tutorial 01 was a standalone demonstration of Spec-Driven Development using a simple Customer Management API.
 
-### Scope
-User identity, CUSTOMER/SELLER/ADMIN roles, ACTIVE/INACTIVE lifecycle, User REST API, impact analysis, regression verification.
+Tutorial 02 starts the long-lived **Mini E-Commerce** application. From this tutorial onward, each tutorial adds an approved specification increment to the same application.
 
-### Out of scope
-Product, Inventory, Cart, Order, Payment, authentication/JWT, PostgreSQL/Flyway, Kafka, Docker, AWS and UI.
+## Tutorial 02 scope
+- Establish product and domain context
+- Establish engineering principles and agent instructions
+- Create the initial `mini-ecom-backend`
+- Implement User Management, lifecycle status, and roles
+- Define and verify the REST contract
 
-### Workflow
-Business Change → Specification Delta → Impact Analysis → Human Review → Implementation → Regression + New Tests → Verification.
+## Current increment
+User Management only.
 
-Run prompts in order: `01-impact-analysis.md`, `02-implement.md`, `03-verify.md`.
+Future capabilities such as Product Catalog, Inventory, Cart, Orders, Payments, Notifications, Security, Observability, CI/CD, and cloud deployment are intentionally out of scope until later specifications introduce them.
+
+> The product requirements define where the system is going. Each specification increment defines exactly what we build next.
